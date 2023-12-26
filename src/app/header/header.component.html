@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <img style="height: 64px;" src="../../assets/images/bike.jpg">
+    <span>Bike Enquiry</span>
+    <span class="example-spacer"></span>
+
+    <form [formGroup]="bikeForm" (ngSubmit)="search()">
+        <label>Kilometer</label>
+        <input type="number" placeholder="Kilometer" formControlName="distance" />
+    
+        <label>Location</label>
+        <input type="text"  placeholder="Location" formControlName="location" />
+        <button type="submit"  value="Search">Search</button>
+    </form>
+    
+</mat-toolbar>

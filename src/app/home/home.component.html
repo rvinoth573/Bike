@@ -1,0 +1,29 @@
+<app-header (emitSearchValue)="getBikeList($event)"></app-header>
+<app-filter (emitFilterValue)="getFilterList($event)"></app-filter>
+<h4 style="text-align: center;">Stolen Counts: {{stolenCount}}</h4>
+<!-- @for (bike of bikeList; track bike.id;) { -->
+<mat-card *ngFor="let bike of obs | async" style="margin-bottom: 10px;" class="example-card">
+    <mat-card-header>
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <div mat-card-avatar *ngIf="bike.large_img">
+            <img style="width: 56px;" [src]="bike.large_img" />
+        </div>
+        <div mat-card-avatar *ngIf="!bike.large_img">
+            <img style="width: 56px;" src="https://files.bikeindex.org/uploads/Pu/739384/small_ShoreA1.jpeg" />
+        </div>
+        <!-- <img style="width: 70px;" src="https://files.bikeindex.org/uploads/Pu/739384/small_ShoreA1.jpeg" /> -->
+        <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        <mat-card-title>{{bike.title}}</mat-card-title>
+        <mat-card-subtitle>Description: {{bike.description || 'NA'}}</mat-card-subtitle>
+
+        <mat-card-subtitle>Date of Stolen: {{bike.date_stolen * 1000 | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
+        <mat-card-content>Location: {{bike.stolen_location}}</mat-card-content>
+    </mat-card-header>
+</mat-card>
+
+<ng-container *ngIf="tempList?.length < 1"> <h2 style="text-align: center;">No Data Found</h2></ng-container>
+<!-- } @empty {
+<h2>No Data Found</h2>
+} -->
+
+<mat-paginator *ngIf="tempList?.length > 0" [pageSizeOptions]="[5, 10]"> </mat-paginator>
