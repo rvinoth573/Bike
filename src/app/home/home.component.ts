@@ -5,14 +5,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { BikeService } from '../services/bike.service';
 import { HeaderComponent } from '../header/header.component';
 import { FilterComponent } from '../filter/filter.component';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatPaginatorModule, HeaderComponent, FilterComponent, CommonModule, NgFor],
+  imports: [MatCardModule, MatIconModule, MatPaginatorModule, HeaderComponent, FilterComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -36,7 +36,6 @@ export class HomeComponent {
     this.bikeService.getBikeList(formData?.location, formData?.distance)
       .subscribe({
         next: (res: any) => {
-          console.log(res.bikes);
           this.bikeList = res.bikes;
           this.dataSource = new MatTableDataSource<any>(this.bikeList);
           this.obs = this.dataSource.connect();
@@ -48,7 +47,7 @@ export class HomeComponent {
         error: (err) => {
           //todo
         },
-        complete: ()=>{
+        complete: () => {
           this.loader.setLoading(false);
         }
       });
@@ -77,6 +76,15 @@ export class HomeComponent {
         this.bikeList.filter((item: any, index: number) => {
           return (startTimestamp <= (item.date_stolen * 1000) && endTimestamp >= (item.date_stolen * 1000) &&
             item.title.toLowerCase().includes(formData.title.toLowerCase()))
+        }));
+    } else if (!formData.title && formData.startDate) {
+      const startDate = new Date(formData.startDate);
+      const startTimestamp = startDate.getTime();
+      const endDate = new Date(formData.endDate);
+      const endTimestamp = endDate.getTime();
+      this.dataSource = new MatTableDataSource<any>(
+        this.bikeList.filter((item: any, index: number) => {
+          return (startTimestamp <= (item.date_stolen * 1000) && endTimestamp >= (item.date_stolen * 1000))
         }));
     } else {
       this.dataSource = new MatTableDataSource<any>(this.bikeList);

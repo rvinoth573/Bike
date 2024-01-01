@@ -19,7 +19,7 @@ export class HeaderComponent {
    // location: ['chennai', [Validators.required, Validators.pattern('^[a-zA-Z][a-zA-Z ]*$')]],
     location: ['chennai', [Validators.required]],
     distance: [10],
-  })
+  });
   constructor(private fb: FormBuilder) {
     
    }
