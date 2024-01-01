@@ -3,11 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MaskDirective } from '../directives/mask.directive';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, FormsModule],
+  imports: [MatIconModule, MatToolbarModule, MatButtonModule, ReactiveFormsModule, FormsModule, MaskDirective],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -15,7 +16,8 @@ export class HeaderComponent {
 
   @Output() emitSearchValue = new EventEmitter();
   public bikeForm = this.fb.group({
-    location: ['chennai', [Validators.required, Validators.pattern('^[a-zA-Z][a-zA-Z ]*$')]],
+   // location: ['chennai', [Validators.required, Validators.pattern('^[a-zA-Z][a-zA-Z ]*$')]],
+    location: ['chennai', [Validators.required]],
     distance: [10],
   })
   constructor(private fb: FormBuilder) {

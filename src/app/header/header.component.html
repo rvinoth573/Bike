@@ -8,7 +8,7 @@
         <input type="number" placeholder="Kilometer" formControlName="distance" />
     
         <label>Location</label>
-        <input type="text"  placeholder="Location" formControlName="location" />
+        <input type="text"  [mask]="'^[a-zA-Z]([a-zA-Z0-9]+ ?)*$'" placeholder="Location" formControlName="location" />
         <button type="submit"  value="Search">Search</button>
     </form>
 </mat-toolbar>
